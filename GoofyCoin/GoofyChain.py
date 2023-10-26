@@ -78,11 +78,15 @@ class GoofyChain:
 
     def findCoinsByUser(self, userPublicKey):
         logger.info("Searching for coins by {}".format(str(userPublicKey)))
+        ret = []
         for idx, goofyNode in enumerate(self._chain):
             if goofyNode.data.verify(userPublicKey):
                 logger.debug("Found a match by the user")
+                ret.append(goofyNode)
             else:
                 logger.debug("Not a match")
+
+        return ret
 
     def __str__(self):
         # Printing the BlockChain

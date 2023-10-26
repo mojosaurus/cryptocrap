@@ -1,5 +1,7 @@
 # cryptocrap
 Hands-on exercises, from the book https://github.com/bitcoinbook/bitcoinbook
+This Crytocoin uses ECDSA digital signature scheme, as suggested in the book.
+The code should be faily self-explanatory.
 
 ## Exercise 1 : GoofyCoin
 1. Goofy can create new coins by simplly signing the statement that hes making a new coin with a unqiue coin ID

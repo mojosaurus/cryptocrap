@@ -26,5 +26,8 @@ if __name__ == "__main__":
     goofy.transferCoin(randomCoin.signature, goofy, ishwar)
 
     vempa = goofy.createUser("vempa")
-    goofy.transferCoin(randomCoin.signature, goofy, vempa)
+    goofy.transferCoin(randomCoin.signature, ishwar, vempa)
+
+    karthik = goofy.createUser("karthik")
+    goofy.transferCoin(randomCoin.signature, vempa, karthik)
     goofy.getCoinsByUser(ishwar.getPublicKey())
