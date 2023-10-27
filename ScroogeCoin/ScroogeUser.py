@@ -1,13 +1,10 @@
+from ecdsa import SigningKey
 from loguru import logger
 import sys
-from ecdsa import SigningKey
 
-"""
-A user in the Goofy system
-"""
 logger.add(sys.stdout, level="TRACE")
 
-class GoofyUser:
+class ScroogeUser:
     name        = None
     def __init__(self, name=""):
         """
@@ -27,10 +24,9 @@ class GoofyUser:
     def getPrivateKey(self):
         return self._privateKey
 
-    def myCoins(self):
+    def verifyTransaction(self):
         """
-        Returns the list of coins owned by this user
-        Anyone can verify the validity of a coin by following the chain of hash pointers 
-        back to its creation by Goofy, verifying signatures all the way
+        Anybody can verify that a transaction(ScroogeBlock) was endorsed by Scrooge by checking Scrooge's signature
+        on the block that it appears in
         """
         pass

@@ -30,7 +30,7 @@ class GoofyChain:
             logger.debug ("This is the Genesis block. Setting the HashPointer as genesis block")
             block.hashPointer = "genesis block"
         else:
-            # We need to do something here. Not sure what
+            # Get the previous block's signature
             logger.debug ("Not a genesis block")
             previousCoinSignature = self._chain[len(self._chain)-1].data.signature
             

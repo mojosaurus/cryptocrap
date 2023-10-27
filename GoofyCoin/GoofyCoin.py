@@ -13,10 +13,11 @@ logger.remove()
 logger.add(sys.stdout, level="TRACE")
 
 class GoofyCoin:
-    uuid        = ""
-    owner       = ""
-    message     = ""
-    signature   = ""
+    uuid        = ""        # UUID of the coin
+    owner       = ""        # Public key of the user who owns this coin
+    message     = ""        # What actually happens in the transaction. See below
+    signature   = ""        # message, signed with the private key of the owner
+    
     def __init__(self, uuid=uuid, owner=owner, message=message, signature=signature):
         # Creates a new coin with the said message and signature
         logger.trace("Creating a new GoofyCoin")

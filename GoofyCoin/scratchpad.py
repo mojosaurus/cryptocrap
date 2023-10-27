@@ -20,14 +20,13 @@ if __name__ == "__main__":
     randomCoin = coins[random.choice(range(len(coins)))]
     logger.info("Random Coin : {}".format(randomCoin.signature))
     
-    #coin1 = goofy.createCoin()
-    #print (coin.verify(goofy.getPublicKey()))
     ishwar = goofy.createUser("ishwar")
-    goofy.transferCoin(randomCoin.signature, goofy, ishwar)
-
     vempa = goofy.createUser("vempa")
+    karthik = goofy.createUser("karthik")
+
+    goofy.transferCoin(randomCoin.signature, goofy, ishwar)
+    
     goofy.transferCoin(randomCoin.signature, ishwar, vempa)
 
-    karthik = goofy.createUser("karthik")
     goofy.transferCoin(randomCoin.signature, vempa, karthik)
     goofy.getCoinsByUser(ishwar.getPublicKey())

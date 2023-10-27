@@ -34,8 +34,6 @@ class Goofy:
     def getPublicKey(self):
         return self._publicKey
 
-    def getPrivateKey():
-        return self._privateKey
 
     def createCoin(self):
         """
@@ -89,7 +87,7 @@ class Goofy:
         newCoin = GoofyCoin(uuid=thisCoin.uuid, owner=targetUser.getPublicKey(), message=message, signature=signature)
         newCoin.verify(targetUser.getPublicKey())
         self.goofyChain.append(newCoin)
-        #logger.info(self.goofyChain)
+        logger.info(self.goofyChain)
 
     def getCoinsByUser(self, userPublicKey):
         """
