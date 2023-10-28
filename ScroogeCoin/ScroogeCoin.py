@@ -25,4 +25,7 @@ class ScroogeCoin:
             SerialNumber    : {} \n\
             Value           : {} \n\
             uuid            : {} \n\
-            ".format(self.serialNumber, self.value, self.uuid)
+            recipient       : {} \n\
+            message         : {} \n\
+            signature       : {} \n\
+            ".format(self.serialNumber, self.value, self.uuid, self.recipient, self.message, self.signature)

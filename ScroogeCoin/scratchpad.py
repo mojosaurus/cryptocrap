@@ -14,27 +14,52 @@ if __name__ == "__main__":
     ishwar = ScroogeUser("ishwar")
     vempa = ScroogeUser("vempa")
     karthik = ScroogeUser("karthik")
-
-    coins = [
+    
+    coins_1 = [
         ScroogeCoin(value=1, recipient=ishwar),
         ScroogeCoin(value=1, recipient=vempa),
         ScroogeCoin(value=1, recipient=karthik)
     ]
 
-    scrooge.createCoins(coins)
+    scrooge.createCoins(coins_1)
 
-    coins = [
+    coins_2 = [
         ScroogeCoin(value=2, recipient=ishwar),
         ScroogeCoin(value=2, recipient=vempa),
         ScroogeCoin(value=2, recipient=karthik)
     ]
 
-    scrooge.createCoins(coins)
-
-    coins = [
-        ScroogeCoin(value=3, recipient=ishwar),
-        ScroogeCoin(value=3, recipient=vempa),
-        ScroogeCoin(value=3, recipient=karthik)
+    scrooge.createCoins(coins_2)
+    
+    coins_3 = [
+        ScroogeCoin(value=1, recipient=ishwar),
+        ScroogeCoin(value=1, recipient=vempa),
+        ScroogeCoin(value=1, recipient=karthik)
     ]
 
-    scrooge.createCoins(coins)
+    scrooge.createCoins(coins_3)
+
+    # Let's take a simple example of destroying coin 3(3) of value 3 and creating 3 coins with value 1 each
+    # and assigning it to the same user
+    scroogeTransaction = {
+        "consume" : [
+            {"uuid" : "1(0)"},
+            {"uuid" : "1(1)"}
+        ],
+        "pay"  : [
+            {"value" : 1, "recipient" : ishwar},
+            {"value" : 1, "recipient" : ishwar},
+            #{"value" : 4, "recipient" : ishwar}
+        ]
+    }
+    scrooge.payCoins(scroogeTransaction)
+
+    duplicateTransaction = {
+        "consume" : [
+            {"uuid" : "1(1)"}
+        ],
+        "pay" : [
+            {"value" : 1, "recipient" : vempa}
+        ]
+    }
+    scrooge.payCoins(duplicateTransaction)

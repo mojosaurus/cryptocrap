@@ -9,24 +9,32 @@ logger.add(sys.stdout, level="TRACE")
 
 class ScroogeBlock:
     """
-    Each block in ScroogeChain is  transaction
+    Each block in ScroogeChain is Transaction
     """
-    uuid        =   ""
-    hashPointer = None
-    data        = None
-    signature   = None
+    uuid        = None      # Same as transactionID in the exercise
+    hashPointer = None      # Hash Pointer to the previous block
+    data        = None      # The list of coins Created
+    signature   = None      # Always signed by Scrooge for all blocks/transactions
 
-    def __init__(self, uuid=uuid, data=data, signature=signature):
+    # Additional transaction fields
+    transactionType = None  # createCoins or payCoins
+    consumedCoinIDs = None  # Valid for transactionType = "payCoins"
+    signatures      = None  # This is valid for transactionType = "payCoins"
+
+    def __init__(self, uuid=uuid, data=data, signature=signature, transactionType=transactionType, 
+        consumedCoinIDs=consumedCoinIDs, signatures=signatures):
         self.uuid = uuid
         self.data = data
         self.signature = signature
-        logger.debug ("Creating a new GoofyBlock {}".format(self))
+        self.transactionType = transactionType
+        self.consumedCoinIDs = consumedCoinIDs
+        self.signatures = signatures
+        logger.debug ("Creating a new ScroogeTransaction {}".format(self))
 
     def validateBlock(self, publicKey):
         """
         Is this a valid block - is this block signed by Scrooge?
         """
-        
         try:
             isVerified = publicKey.verify(self.signature, pickle.dumps(self.data))
             logger.debug ("This is a valid block. Signed by Scrooge")
@@ -37,6 +45,15 @@ class ScroogeBlock:
             logger.error("Invalid, no signature")
             return False
         
+        # for payCoins transaction, you need more checks
+        if self.transactionType == "payCoins":
+            logger.info("This is a payCoins block. Needs additional checks {}".format(self.signatures))
+            
+            for coinId, coinSignature in self.signatures.items():
+                # Get the publicKey of the user who owns this coin, and verify the signature
+                # Not doing it here for lack of time
+                continue
+
         return True
 
     def __str__(self):
@@ -45,7 +62,9 @@ class ScroogeBlock:
                 hashPointer :   {} \
                 data        :   {} \
                 signature   :   {}  \
-            """.format(self.uuid, self.hashPointer, self.data, self.signature)
+                transactionType : {} \
+                consumedCoinIDs : {}
+            """.format(self.uuid, self.hashPointer, self.data, self.signature, self.transactionType, self.consumedCoinIDs)
 
 class ScroogeChain:
     transactions = []
@@ -111,3 +130,29 @@ class ScroogeChain:
 
     def __str__(self):
         return "\n".join([transaction in self.transactions])
+
+    def findCoinByUUID(self, uuid):
+        logger.info("Finding coin by UUID : {}".format(uuid))
+
+        for idx, transaction in enumerate(self.transactions):
+            #logger.info("Searching for {}".format(uuid))
+            print (transaction.data)
+            for idy, scroogeCoin in enumerate(transaction.data):
+                if scroogeCoin.uuid == uuid:
+                    logger.info("We have a match")
+                    return scroogeCoin
+
+        return False
+
+    def isCoinConsumed(self, coin):
+        logger.info ("Checking if the coin {} is already consumed in an earlier transaction".format(coin))
+        for idx, scroogeBlock in enumerate(self.transactions):
+            if scroogeBlock.transactionType == "payCoins":
+                print (coin)
+                print(scroogeBlock.consumedCoinIDs)
+                if coin.uuid in scroogeBlock.consumedCoinIDs:
+                    logger.error("This coin {} is already consumed. Sorry".format(coin))
+                    return True
+
+        logger.info("The coin {} was not consumed earlier.".format(coin))
+        return False
